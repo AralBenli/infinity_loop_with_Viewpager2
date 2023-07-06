@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#444444"
+    tools:context=".SliderFragment">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/home_viewPager"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toTopOf="@+id/home_tabLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/home_tabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:background="@drawable/tab_background"
+        android:isScrollContainer="true"
+        android:maxHeight="20dp"
+        android:minHeight="20dp"
+        app:layout_constraintEnd_toStartOf="@id/rightArrow"
+        app:layout_constraintStart_toEndOf="@id/leftArrow"
+        app:layout_constraintTop_toBottomOf="@id/home_viewPager"
+        app:tabBackground="@drawable/tablayout_indicator_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:tabMaxWidth="20dp"
+        app:tabMinWidth="20dp"
+        app:tabMode="scrollable"
+        app:tabPaddingEnd="4dp"
+        app:tabPaddingStart="4dp" />
+
+    <ImageButton
+        android:id="@+id/leftArrow"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:background="@drawable/button_background"
+        android:src="@drawable/left_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_viewPager" />
+
+    <ImageButton
+        android:id="@+id/rightArrow"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/button_background"
+        android:src="@drawable/right_arrow"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_viewPager" />
+
+
+
+    <SeekBar
+        android:id="@+id/speedSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:max="10"
+        android:paddingStart="16dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="16dp"
+        android:progress="5"
+        android:progressTint="#FF0000"
+        android:thumb="@drawable/witcher_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_tabLayout" />
+
+
+    <Button
+        android:id="@+id/stop"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#8B0000"
+        android:text="Stop autoscroll"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/speedSeekBar" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
