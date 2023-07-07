@@ -61,16 +61,24 @@ class SliderFragment : Fragment() {
 
 
         val sliderItems: MutableList<SliderItem> = ArrayList()
-        sliderItems.add(SliderItem(R.drawable.yennifer))
         sliderItems.add(SliderItem(R.drawable.triss_marigold))
+        sliderItems.add(SliderItem(R.drawable.yennifer))
         sliderItems.add(SliderItem(R.drawable.ciri))
         sliderItems.add(SliderItem(R.drawable.triss))
         sliderItems.add(SliderItem(R.drawable.witcha))
         sliderItems.add(SliderItem(R.drawable.triss_mg))
         sliderItems.add(SliderItem(R.drawable.witcher_im_jpg))
 
+        val firstItem = sliderItems[sliderItems.size - 1]
+        val lastItem = sliderItems[0]
+
+        sliderItems.add(0, firstItem)
+        sliderItems.add(lastItem)
+
         sliderAdapter = SliderAdapter(requireContext(), sliderItems)
         binding.homeViewPager.adapter = sliderAdapter
+        binding.homeViewPager.offscreenPageLimit = 2
+        binding.homeViewPager.setPageTransformer(null)
 
 
         val recyclerView = binding.homeViewPager.getChildAt(0) as RecyclerView
@@ -88,7 +96,7 @@ class SliderFragment : Fragment() {
                 val firstItemVisible = layoutManager.findFirstVisibleItemPosition()
                 val lastItemVisible = layoutManager.findLastVisibleItemPosition()
                 //val position = binding.homeViewPager.currentItem
-                ///Log.d("Array","firstItemVisible:$firstItemVisible")
+                //Log.d("Array","firstItemVisible:$firstItemVisible")
                 //Log.d("Array","lastItemVisible:$lastItemVisible")
                 //Log.d("Array","CurrentItem:$position")
 
@@ -107,8 +115,8 @@ class SliderFragment : Fragment() {
         val tabLayout = binding.homeTabLayout
         val viewPager = binding.homeViewPager
 
-        val actualItemCount =
-            itemCount - 2 // Number of actual items , remove first and last imaginal duplicates
+        val actualItemCount = itemCount - 2 // Number of actual items , remove first and last imaginal duplicates
+
 
         TabLayoutMediator(tabLayout, viewPager) { _, position ->
             when (position) {
@@ -121,7 +129,7 @@ class SliderFragment : Fragment() {
 
     }
 
-    private fun adjustSpeed(){
+    private fun adjustSpeed() {
         binding.speedSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 val invertedProgress = binding.speedSeekBar.max - progress
@@ -136,10 +144,12 @@ class SliderFragment : Fragment() {
                     }
                 }
             }
+
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
     }
+
     private fun calculateDelayFromProgress(progress: Int): Long {
         val minDelay = 5000L
         val maxDelay = 1000L
@@ -163,7 +173,7 @@ class SliderFragment : Fragment() {
         autoScrollHandler.postDelayed(autoScrollRunnable!!, autoScrollDelay)
     }
 
-    private fun startAutoScrollLeft(delay : Long) {
+    private fun startAutoScrollLeft(delay: Long) {
         stopAutoScroll()
         isAutoScrolling = true
         isScrollingLeft = true
@@ -178,6 +188,7 @@ class SliderFragment : Fragment() {
         }
         autoScrollHandler.postDelayed(autoScrollRunnable!!, autoScrollDelay)
     }
+
     private fun stopAutoScroll() {
         isAutoScrolling = false
         isScrollingRight = false
@@ -187,6 +198,7 @@ class SliderFragment : Fragment() {
             autoScrollRunnable = null
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

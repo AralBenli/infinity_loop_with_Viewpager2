@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.loopingviewpager.databinding.SliderItemBinding
-import okhttp3.Interceptor.Companion.invoke
 
 /**
  * Created by AralBenli on 6.07.2023.
@@ -38,6 +37,6 @@ class SliderAdapter constructor(
         holder.bind(listSlider[actualPosition].ImageId)
     }
 
-    override fun getItemCount(): Int = listSlider.size + 2
+    override fun getItemCount(): Int = listSlider.size
 
 }
