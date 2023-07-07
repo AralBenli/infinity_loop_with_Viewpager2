@@ -11,9 +11,9 @@ import com.example.loopingviewpager.databinding.SliderItemBinding
  * Created by AralBenli on 6.07.2023.
  */
 class SliderAdapter constructor(
-    val context: Context,
-    private val listSlider: List<SliderItem>
+    private var context: Context
 ) : RecyclerView.Adapter<SliderAdapter.ViewPagerViewHolder>() {
+    private var listSlider = arrayListOf<SliderItem>()
 
     inner class ViewPagerViewHolder(private val binding: SliderItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -32,6 +32,7 @@ class SliderAdapter constructor(
         )
         return ViewPagerViewHolder(binding)
     }
+
     override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
         val actualPosition = position % listSlider.size
         holder.bind(listSlider[actualPosition].ImageId)
@@ -39,4 +40,12 @@ class SliderAdapter constructor(
 
     override fun getItemCount(): Int = listSlider.size
 
+    fun setItems(items: List<SliderItem>) {
+        listSlider.clear()
+        listSlider.addAll(items)
+        if (listSlider.isNotEmpty()) {
+            listSlider = (listOf(listSlider.last()) + listSlider + listOf(listSlider.first())) as ArrayList<SliderItem>
+            notifyDataSetChanged()
+        }
+    }
 }

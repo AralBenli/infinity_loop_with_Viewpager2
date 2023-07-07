@@ -25,10 +25,10 @@
         android:isScrollContainer="true"
         android:maxHeight="20dp"
         android:minHeight="20dp"
+        app:tabBackground="@drawable/tablayout_indicator_selector"
         app:layout_constraintEnd_toStartOf="@id/rightArrow"
         app:layout_constraintStart_toEndOf="@id/leftArrow"
         app:layout_constraintTop_toBottomOf="@id/home_viewPager"
-        app:tabBackground="@drawable/tablayout_indicator_selector"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
         app:tabMaxWidth="20dp"
@@ -44,18 +44,20 @@
         android:layout_marginStart="50dp"
         android:background="@drawable/button_background"
         android:src="@drawable/left_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/home_tabLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_viewPager" />
+        app:layout_constraintTop_toTopOf="@+id/home_tabLayout" />
 
     <ImageButton
         android:id="@+id/rightArrow"
         android:layout_width="50dp"
-        android:layout_height="50dp"
         android:layout_marginEnd="50dp"
+        android:layout_height="50dp"
         android:background="@drawable/button_background"
         android:src="@drawable/right_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/home_tabLayout"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_viewPager" />
+        app:layout_constraintTop_toTopOf="@+id/home_tabLayout" />
 
 
 
