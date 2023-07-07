@@ -38,7 +38,28 @@ class SliderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val sliderItems: MutableList<SliderItem> = ArrayList()
+        sliderItems.add(SliderItem(R.drawable.triss_marigold))
+        sliderItems.add(SliderItem(R.drawable.yennifer))
+        sliderItems.add(SliderItem(R.drawable.ciri))
+        sliderItems.add(SliderItem(R.drawable.triss))
+        sliderItems.add(SliderItem(R.drawable.witcha))
+        sliderItems.add(SliderItem(R.drawable.triss_mg))
+        sliderItems.add(SliderItem(R.drawable.witcher_im_jpg))
+
+        val firstItem = sliderItems[sliderItems.size - 1]
+        val lastItem = sliderItems[0]
+        sliderItems.add(0, firstItem)
+        sliderItems.add(lastItem)
+
+        sliderAdapter = SliderAdapter(requireContext(), sliderItems)
+
         adjustSpeed()
+        buttonFunctions()
+        scrollListener()
+
+    }
+    private fun buttonFunctions(){
         binding.leftArrow.setOnClickListener {
             startAutoScrollLeft(autoScrollDelay)
             binding.leftArrow.setColorFilter(Color.RED)
@@ -58,77 +79,56 @@ class SliderFragment : Fragment() {
             binding.rightArrow.setColorFilter(Color.BLACK)
 
         }
+    }
+    private fun scrollListener() {
+        with(binding){
+            val recyclerView = binding.homeViewPager.getChildAt(0) as RecyclerView
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val itemCount = sliderAdapter!!.itemCount
+            val actualItemCount = itemCount - 2 // Number of actual items , remove first and last imaginal duplicates
 
+            homeViewPager.adapter = sliderAdapter
+            //homeViewPager.setPageTransformer(null)
+            binding.homeViewPager.offscreenPageLimit = actualItemCount
 
-        val sliderItems: MutableList<SliderItem> = ArrayList()
-        sliderItems.add(SliderItem(R.drawable.triss_marigold))
-        sliderItems.add(SliderItem(R.drawable.yennifer))
-        sliderItems.add(SliderItem(R.drawable.ciri))
-        sliderItems.add(SliderItem(R.drawable.triss))
-        sliderItems.add(SliderItem(R.drawable.witcha))
-        sliderItems.add(SliderItem(R.drawable.triss_mg))
-        sliderItems.add(SliderItem(R.drawable.witcher_im_jpg))
+            Log.d("Array", "$itemCount")
+            binding.homeViewPager.setCurrentItem(1, false)
 
-        val firstItem = sliderItems[sliderItems.size - 1]
-        val lastItem = sliderItems[0]
+            val scrollListener = object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
 
-        sliderItems.add(0, firstItem)
-        sliderItems.add(lastItem)
-
-        sliderAdapter = SliderAdapter(requireContext(), sliderItems)
-        binding.homeViewPager.adapter = sliderAdapter
-        binding.homeViewPager.offscreenPageLimit = 2
-        binding.homeViewPager.setPageTransformer(null)
-
-
-        val recyclerView = binding.homeViewPager.getChildAt(0) as RecyclerView
-        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-
-
-        val itemCount = sliderAdapter!!.itemCount
-        Log.d("Array", "$itemCount")
-        binding.homeViewPager.setCurrentItem(1, false)
-
-        val scrollListener = object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                val firstItemVisible = layoutManager.findFirstVisibleItemPosition()
-                val lastItemVisible = layoutManager.findLastVisibleItemPosition()
-                //val position = binding.homeViewPager.currentItem
-                //Log.d("Array","firstItemVisible:$firstItemVisible")
-                //Log.d("Array","lastItemVisible:$lastItemVisible")
-                //Log.d("Array","CurrentItem:$position")
-
-                if (firstItemVisible == itemCount - 1 && dx > 0) {
+                    val firstItemVisible = layoutManager.findFirstVisibleItemPosition()
+                    val lastItemVisible = layoutManager.findLastVisibleItemPosition()
+                    //val position = binding.homeViewPager.currentItem
                     //Log.d("Array","firstItemVisible:$firstItemVisible")
-                    binding.homeViewPager.setCurrentItem(1, false)
-                }
-                if (lastItemVisible == 0 && dx < 0) {
                     //Log.d("Array","lastItemVisible:$lastItemVisible")
-                    binding.homeViewPager.setCurrentItem(itemCount - 2, false)
+                    //Log.d("Array","CurrentItem:$position")
+
+                    if (firstItemVisible == itemCount - 1 && dx > 0) {
+                        //Log.d("Array","firstItemVisible:$firstItemVisible")
+                        binding.homeViewPager.setCurrentItem(1, false)
+                    }
+                    if (lastItemVisible == 0 && dx < 0) {
+                        //Log.d("Array","lastItemVisible:$lastItemVisible")
+                        binding.homeViewPager.setCurrentItem(itemCount - 2, false)
+                    }
                 }
             }
+            recyclerView.addOnScrollListener(scrollListener)
+
+
+            TabLayoutMediator(homeTabLayout, homeViewPager) { _, position ->
+                when (position) {
+                    0 -> actualItemCount - 1 // Last actual item
+                    else -> position - 1
+                }
+            }.attach()
+            homeTabLayout.getTabAt(0)?.view?.visibility = View.GONE
+            homeTabLayout.getTabAt(itemCount - 1)?.view?.visibility = View.GONE
         }
-        recyclerView.addOnScrollListener(scrollListener)
-
-        val tabLayout = binding.homeTabLayout
-        val viewPager = binding.homeViewPager
-
-        val actualItemCount = itemCount - 2 // Number of actual items , remove first and last imaginal duplicates
-
-
-        TabLayoutMediator(tabLayout, viewPager) { _, position ->
-            when (position) {
-                0 -> actualItemCount - 1 // Last actual item
-                else -> position - 1
-            }
-        }.attach()
-        tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-        tabLayout.getTabAt(itemCount - 1)?.view?.visibility = View.GONE
 
     }
-
     private fun adjustSpeed() {
         binding.speedSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -149,14 +149,12 @@ class SliderFragment : Fragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
     }
-
     private fun calculateDelayFromProgress(progress: Int): Long {
         val minDelay = 5000L
         val maxDelay = 1000L
         val range = maxDelay - minDelay
         return maxDelay - (range * progress / binding.speedSeekBar.max)
     }
-
     private fun startAutoScrollRight(delay: Long) {
         stopAutoScroll()
         isAutoScrolling = true
@@ -172,7 +170,6 @@ class SliderFragment : Fragment() {
         }
         autoScrollHandler.postDelayed(autoScrollRunnable!!, autoScrollDelay)
     }
-
     private fun startAutoScrollLeft(delay: Long) {
         stopAutoScroll()
         isAutoScrolling = true
@@ -188,7 +185,6 @@ class SliderFragment : Fragment() {
         }
         autoScrollHandler.postDelayed(autoScrollRunnable!!, autoScrollDelay)
     }
-
     private fun stopAutoScroll() {
         isAutoScrolling = false
         isScrollingRight = false
@@ -198,7 +194,6 @@ class SliderFragment : Fragment() {
             autoScrollRunnable = null
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
