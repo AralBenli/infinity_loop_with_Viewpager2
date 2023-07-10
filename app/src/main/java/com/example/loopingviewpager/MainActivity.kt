@@ -16,17 +16,14 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        try {
-            setContentView(binding.root)
-        } catch (e: java.lang.Exception) {
-            print(e)
-        }
         initViews()
 
     }
 
   private fun initViews(){
-
+      navHostFragment =
+          supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
     }
 }

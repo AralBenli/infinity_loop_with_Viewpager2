@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.loopingviewpager.databinding.FragmentHomeBinding
@@ -58,6 +59,13 @@ class SliderFragment : Fragment() {
     }
 
     private fun buttonFunctions() {
+
+        binding.next.setOnClickListener {
+            findNavController().navigate(R.id.toNext)
+        }
+
+
+
         binding.leftArrow.setOnClickListener {
             startAutoScrollLeft(autoScrollDelay)
             binding.leftArrow.setColorFilter(Color.RED)

@@ -118,4 +118,8 @@ dependencies {
         exclude group: 'glide-parent'
     }
 
+    //bannerviewpager
+    implementation 'com.github.zhpanvip:BannerViewPager:2.7.0'
+
+
 }

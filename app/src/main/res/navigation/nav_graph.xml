@@ -9,5 +9,14 @@
         android:id="@+id/homeFragment"
         android:name="com.example.loopingviewpager.SliderFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/toNext"
+            app:destination="@id/secondSliderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/secondSliderFragment"
+        android:name="com.example.loopingviewpager.SecondSliderFragment"
+        android:label="fragment_second_slider"
+        tools:layout="@layout/fragment_second_slider" />
 </navigation>

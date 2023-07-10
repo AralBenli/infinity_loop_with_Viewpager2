@@ -6,3 +6,4 @@ package com.example.loopingviewpager
 data class SliderItem (
     val ImageId : Int
 )
+

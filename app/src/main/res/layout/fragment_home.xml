@@ -25,10 +25,10 @@
         android:isScrollContainer="true"
         android:maxHeight="20dp"
         android:minHeight="20dp"
-        app:tabBackground="@drawable/tablayout_indicator_selector"
         app:layout_constraintEnd_toStartOf="@id/rightArrow"
         app:layout_constraintStart_toEndOf="@id/leftArrow"
         app:layout_constraintTop_toBottomOf="@id/home_viewPager"
+        app:tabBackground="@drawable/tablayout_indicator_selector"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
         app:tabMaxWidth="20dp"
@@ -51,14 +51,13 @@
     <ImageButton
         android:id="@+id/rightArrow"
         android:layout_width="50dp"
-        android:layout_marginEnd="50dp"
         android:layout_height="50dp"
+        android:layout_marginEnd="50dp"
         android:background="@drawable/button_background"
         android:src="@drawable/right_arrow"
         app:layout_constraintBottom_toBottomOf="@+id/home_tabLayout"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/home_tabLayout" />
-
 
 
     <SeekBar
@@ -84,12 +83,23 @@
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="#8B0000"
-        android:text="Stop autoscroll"
+        android:text="@string/stop_autoscroll"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/speedSeekBar" />
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="@string/next_slider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/stop"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stop" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
